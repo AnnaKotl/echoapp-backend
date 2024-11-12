@@ -1,31 +1,27 @@
-const Request = require('../models/Request');
-const sendEmail = require('../helpers/sendEmail');
-const { HttpError } = require('../helpers');
-const { formValidationSchema } = require('../helpers/validators');
+const { HttpError, validators, sendEmail, Request } = require('../helpers');
 
 const createContactRequest = async (req, res, next) => {
   try {
-    const { error } = formValidationSchema.validate(req.body);
-    if (error) {
-      throw HttpError(400, error.details[0].message);
-    }
-    const newRequest = await Request.create(req.body);
+    // Валідація запиту
+    validators(req.body);
 
+    const { firstName, lastName, email, message, selectedService, mobileNumber } = req.body;
+
+    // Створення нового запиту
+    const newRequest = await Request.create({ firstName, lastName, email, message, selectedService, mobileNumber });
+
+    // Відправка листа
     await sendEmail({
       to: process.env.SITE_OWNER_EMAIL,
       subject: 'New Contact Request',
-      html: `<p>New contact request from ${req.body.firstName} ${req.body.lastName}</p>`,
+      html: `<p>New contact request from ${firstName} ${lastName}</p>`,
     });
 
+    // Відповідь на успішний запит
     res.status(201).json({ message: 'Contact request submitted successfully', newRequest });
   } catch (err) {
-    next(err);
+    next(HttpError(400, err.message));
   }
 };
 
-module.exports = {
-  createContactRequest,
-};
-
-// processing form requests
-// storing data in MongoDB
+module.exports = { createContactRequest };

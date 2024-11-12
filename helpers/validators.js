@@ -1,11 +1,19 @@
 const Joi = require('joi');
 
-const validators = (schema, data) => {
-  const { error } = schema.validate(data);
+const formValidationSchema = Joi.object({
+  firstName: Joi.string().min(2).max(30).required(),
+  lastName: Joi.string().min(2).max(30).required(),
+  email: Joi.string().email().required(),
+  message: Joi.string().min(5).max(500).required(),
+  selectedService: Joi.string().required(),
+  mobileNumber: Joi.string().required()
+});
+
+const validators = (data) => {
+  const { error } = formValidationSchema.validate(data);
   if (error) {
     const message = error.details.map((detail) => detail.message).join(', ');
-    const status = 400;
-    throw new Error(message, status);
+    throw new Error(message);
   }
 };
 

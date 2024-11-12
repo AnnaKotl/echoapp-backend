@@ -6,6 +6,7 @@ const generateId = require('./generateId');
 const parseJsonBody = require('./parseJsonBody');
 const sendEmail = require('./sendEmail');
 const errorHandler = require('./errorHandler');
+const Request = require('./requestSchema');
 
 module.exports = {
   HttpError,
@@ -16,7 +17,9 @@ module.exports = {
   parseJsonBody,
   sendEmail,
   errorHandler,
+  Request
 };
+
 
 // import -> exports helpers
 // const { HttpError, handleMongooseError, moment, validators, generateId, parseJsonBody, sendEmail, errorHandler } = require('./helpers');
