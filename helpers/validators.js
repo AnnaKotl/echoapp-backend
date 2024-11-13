@@ -1,12 +1,14 @@
 const Joi = require('joi');
 
 const formValidationSchema = Joi.object({
-  firstName: Joi.string().min(2).max(30).required(),
-  lastName: Joi.string().min(2).max(30).required(),
+  name: Joi.string().min(3).max(50).required(),
+  mobileNumber: Joi.string().pattern(/^\+?[1-9]\d{1,14}$/).required(),
   email: Joi.string().email().required(),
-  message: Joi.string().min(5).max(500).required(),
-  selectedService: Joi.string().required(),
-  mobileNumber: Joi.string().required()
+  socialNetwork: Joi.string().optional(),
+  country: Joi.string().min(2).max(50).required(),
+  city: Joi.string().min(2).max(50).optional(),
+  selectedService: Joi.string().valid('IOS-app-1', 'IOS-app-2', 'IOS-app-3').required(),
+  message: Joi.string().max(2000).optional()
 });
 
 const validators = (data) => {
@@ -18,17 +20,3 @@ const validators = (data) => {
 };
 
 module.exports = validators;
-
-// Joi - validation schema
-
-// old code
-// const Joi = require('joi');
-// const validators = Joi.object({
-//   firstName: Joi.string().min(2).max(50).required(),
-//   lastName: Joi.string().min(2).max(50).required(),
-//   email: Joi.string().email().required(),
-//   mobileNumber: Joi.string().pattern(/^\+?[1-9]\d{1,14}$/).required(),
-//   selectedService: Joi.string().valid('IOS-app-1', 'IOS-app-2', 'IOS-app-3').required(),
-//   comment: Joi.string().max(500).optional(),
-// });
-// module.exports = validators;
