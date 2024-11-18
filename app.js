@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const contactRoutes = require('./routes/contact');
+const uploadRoutes = require('./routes/upload');
+const iconRoutes = require('./routes/icons');
 const errorHandler = require('./helpers/errorHandler');
 const setupSwagger = require('./config/swagger');
 const cors = require('cors');
@@ -16,6 +18,8 @@ app.use(logger(formatsLogger));
 app.use(cors(corsOptions()));
 app.use(express.json());
 app.use('/contact', contactRoutes);
+app.use('/upload', uploadRoutes);
+app.use('/icons', iconRoutes);
 app.use(errorHandler);
 
 setupSwagger(app);

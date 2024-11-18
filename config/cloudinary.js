@@ -1,20 +1,15 @@
 const cloudinary = require('cloudinary').v2;
-const fs = require('fs');
+const dotenv = require('dotenv');
+dotenv.config();
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-const uploadImage = (imagePath) => {
-  cloudinary.uploader.upload(imagePath, (error, result) => {
-    if (error) {
-      console.error('Upload failed:', error);
-    } else {
-      console.log('Upload successful:', result);
-    }
+if (process.env.CLOUDINARY_URL) {
+  cloudinary.config(process.env.CLOUDINARY_URL);
+} else {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
   });
-};
+}
 
-module.exports = { uploadImage };
+module.exports = cloudinary;
