@@ -1,5 +1,5 @@
 const corsOptions = () => ({
-  origin: ['http://localhost:5173'],
+  origin: ['https://www.echocode.app'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 200,
@@ -8,3 +8,4 @@ const corsOptions = () => ({
 module.exports = corsOptions;
 
 // origin ->>>>>>> 'https://www.echocode.app'
+// local -> 'http://localhost:5173'
