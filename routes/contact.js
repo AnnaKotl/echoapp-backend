@@ -19,7 +19,6 @@ module.exports = router;
 //     "city": "New York",
 //     "message": "This is a test message"
 //   }
-
 // {
 //     "message": "Contact request submitted successfully",
 //     "newRequest": {
