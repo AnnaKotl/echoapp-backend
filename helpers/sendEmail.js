@@ -1,13 +1,13 @@
 require('dotenv').config();
-
 const mailjet = require('node-mailjet').apiConnect(process.env.MJ_APIKEY_PUBLIC, process.env.MJ_APIKEY_PRIVATE);
 
-const sendEmail = async ({ to, subject, name, mobileNumber, email, socialNetwork, country, city, selectedService, message }) => {
+const sendEmail = async ({ to, subject, name, email, mobileNumber, socialNetwork, country, city, selectedService, message }) => {
   try {
-    // Перевірка email
-    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-    if (!emailRegex.test(email)) {
-      throw new Error("Invalid email format");
+    if (!process.env.SENDER_EMAIL || !to) {
+      console.error("Environment variables missing:");
+      console.log("Sender email:", process.env.SENDER_EMAIL);
+      console.log("Recipient email:", to);
+      throw new Error('Recipient or sender email is missing');
     }
 
     const htmlContent = `
@@ -22,36 +22,32 @@ const sendEmail = async ({ to, subject, name, mobileNumber, email, socialNetwork
       <p><strong>Social Network:</strong> ${socialNetwork || 'Not Provided'}</p>
     `;
 
-    const request = await mailjet
-      .post("send", { version: 'v3.1' })
-      .request({
-        Messages: [
-          {
-            From: {
-              Email: 'no-reply@yourcompany.com', // Використовуйте свою адресу для відправника
-              Name: name || 'Anonymous Client',
-            },
-            To: [
-              {
-                Email: process.env.RECIPIENT_EMAIL,
-              },
-            ],
-            Subject: subject,
-            HTMLPart: htmlContent,
-            ReplyTo: email,
+    const request = await mailjet.post("send", { version: 'v3.1' }).request({
+      Messages: [
+        {
+          From: {
+            Email: process.env.SENDER_EMAIL,
+            Name: 'Website Contact Form',
           },
-        ],
-      });
+          To: [
+            {
+              Email: to,
+            },
+          ],
+          Subject: subject,
+          HTMLPart: htmlContent,
+          ReplyTo: {
+            Email: email,
+          },
+        },
+      ],
+    });
 
-    console.log("Email sent:", request.body);
-
+    console.log("Email sent successfully:", request.body);
   } catch (error) {
     console.error("Error sending email:", error.message);
-
-    console.log('Email:', email);
-    console.log('Sending email to:', process.env.RECIPIENT_EMAIL);
+    throw new Error("Failed to send email. Please try again later.");
   }
 };
-
 
 module.exports = sendEmail;
