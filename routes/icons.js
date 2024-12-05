@@ -23,3 +23,15 @@ router.get('/', async (req, res) => {
 module.exports = router;
 
 // GET http://localhost:5001/icons
+// {
+//   "success": true,
+//   "icons": [
+//       {
+//           "url": "https://res.cloudinary.com/dv10ghdyb/image/upload/v1733409392/aiplantcoin-first-screen_mibsqn.svg",
+//           "id": "aiplantcoin-first-screen_mibsqn"
+//       }
+//   ]
+// }
+
+// GET https://res.cloudinary.com/dv10ghdyb/image/upload/v1733409392/aiplantcoin-first-screen_mibsqn.svg
+// SOME_ICONS.svg
