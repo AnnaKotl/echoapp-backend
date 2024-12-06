@@ -21,7 +21,7 @@ const createContactRequest = async (req, res, next) => {
 
     await sendEmail({
       to: process.env.RECIPIENT_EMAIL,
-      subject: 'NEW CUSTOMER FEEDBACK MESSAGE RECEIVED',
+      subject: 'NEW CLIENT',
       ...validData,
     });
 
