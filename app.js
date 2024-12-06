@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const createSubmitRequest = require('./routes/submit-form'); 
 const contactRoutes = require('./routes/contact');
 const uploadRoutes = require('./routes/upload');
 const iconRoutes = require('./routes/icons');
@@ -9,6 +10,7 @@ const setupSwagger = require('./config/swagger');
 const cors = require('cors');
 const corsOptions = require('./config/cors');
 const logger = require('morgan');
+
 dotenv.config();
 
 const app = express();
@@ -17,6 +19,7 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use(logger(formatsLogger));
 app.use(cors(corsOptions()));
 app.use(express.json());
+app.use('/submit-request', createSubmitRequest);
 app.use('/contact', contactRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/icons', iconRoutes);

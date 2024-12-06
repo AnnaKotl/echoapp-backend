@@ -5,8 +5,8 @@ const sendEmail = async ({ to, subject, name, email, mobileNumber, socialNetwork
   try {
     if (!process.env.SENDER_EMAIL || !to) {
       console.error("Environment variables missing:");
-      console.log("Sender email:", process.env.SENDER_EMAIL);
-      console.log("Recipient email:", to);
+      console.log("Sender email:", process.env.SENDER_EMAIL);  // LOG ----------------------------- > DELETE after DEV
+      console.log("Recipient email:", to);  // LOG ----------------------------- > DELETE after DEV
       throw new Error('Recipient or sender email is missing');
     }
 
@@ -35,7 +35,7 @@ const sendEmail = async ({ to, subject, name, email, mobileNumber, socialNetwork
             },
           ],
           Subject: subject,
-          TextPart: `New Request`,
+          TextPart: "New Request",
           HTMLPart: htmlContent,
           ReplyTo: {
             Email: email,
@@ -44,7 +44,7 @@ const sendEmail = async ({ to, subject, name, email, mobileNumber, socialNetwork
       ],
     });
 
-    console.log("Email sent successfully:", JSON.stringify(request.body, null, 2));
+    console.log("Email sent successfully:", JSON.stringify(request.body, null, 2));  // LOG ----------------------------- > DELETE after DEV
 
   } catch (error) {
     console.error("Error sending email:", error.message);

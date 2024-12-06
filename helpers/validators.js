@@ -36,11 +36,13 @@ const formValidationSchema = Joi.object({
 });
 
 const validators = (data) => {
+  console.log('Validating data:', data);  // LOG ----------------------------- > DELETE after DEV
   const { error, value } = formValidationSchema.validate(data, {
     abortEarly: false,
   });
 
   if (error) {
+    console.log('Validation error details:', error.details);
     const message = error.details.map((detail) => detail.message).join(', ');
     throw new Error(message);
   }
