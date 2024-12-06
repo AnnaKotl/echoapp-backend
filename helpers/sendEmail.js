@@ -35,6 +35,7 @@ const sendEmail = async ({ to, subject, name, email, mobileNumber, socialNetwork
             },
           ],
           Subject: subject,
+          TextPart: `New Request`,
           HTMLPart: htmlContent,
           ReplyTo: {
             Email: email,
@@ -43,7 +44,8 @@ const sendEmail = async ({ to, subject, name, email, mobileNumber, socialNetwork
       ],
     });
 
-    console.log("Email sent successfully:", request.body);
+    console.log("Email sent successfully:", JSON.stringify(request.body, null, 2));
+
   } catch (error) {
     console.error("Error sending email:", error.message);
     throw new Error("Failed to send email. Please try again later.");

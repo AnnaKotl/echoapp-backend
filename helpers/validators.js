@@ -1,22 +1,50 @@
 const Joi = require('joi');
 
+const capitalizeName = (name) => {
+  return name
+    .split(' ')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+    .join(' ');
+};
+
 const formValidationSchema = Joi.object({
-  name: Joi.string().min(3).max(50).required(),
-  mobileNumber: Joi.string().pattern(/^\+?[1-9]\d{1,14}$/).required(),
+  name: Joi.string()
+    .min(2)
+    .max(100)
+    .required()
+    .custom((value, helpers) => capitalizeName(value)),
+  mobileNumber: Joi.string()
+    .pattern(/^[\s\S]{4,20}$/)
+    .required(),
   email: Joi.string().email().required(),
-  socialNetwork: Joi.string().optional(),
+  socialNetwork: Joi.string()
+    .allow('')
+    .optional(),
   country: Joi.string().min(2).max(50).required(),
   city: Joi.string().min(2).max(50).optional(),
-  selectedService: Joi.string().valid('IOS-app-1', 'IOS-app-2', 'IOS-app-3').required(),
-  message: Joi.string().max(2000).optional()
+  selectedService: Joi.string()
+    .valid(
+      'IOS-app-1',
+      'IOS-app-2',
+      'IOS-app-3',
+      'IOS-app-4',
+      'IOS-app-5',
+      'IOS-app-6'
+    )
+    .required(),
+  message: Joi.string().max(2000).allow('').optional(),
 });
 
 const validators = (data) => {
-  const { error } = formValidationSchema.validate(data);
+  const { error, value } = formValidationSchema.validate(data, {
+    abortEarly: false,
+  });
+
   if (error) {
     const message = error.details.map((detail) => detail.message).join(', ');
     throw new Error(message);
   }
+  return value;
 };
 
 module.exports = validators;

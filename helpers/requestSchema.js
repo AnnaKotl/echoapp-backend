@@ -41,7 +41,12 @@ const requestSchema = new mongoose.Schema({
   selectedService: {
     type: String,
     required: [true, 'Selected service is required'],
-    enum: ['IOS-app-1', 'IOS-app-2', 'IOS-app-3']
+    enum: ['IOS-app-1',
+      'IOS-app-2',
+      'IOS-app-3',
+      'IOS-app-4',
+      'IOS-app-5',
+      'IOS-app-6']
   },
   message: {
     type: String,

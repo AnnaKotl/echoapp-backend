@@ -2,11 +2,9 @@ const { HttpError, validators, sendEmail, Request } = require('../helpers');
 
 const createContactRequest = async (req, res, next) => {
   try {
-    validators(req.body);
+    const validData = validators(req.body);
 
-    const { name, email, message, selectedService, mobileNumber, socialNetwork, country, city } = req.body;
-
-    const newRequest = await Request.create({
+    const {
       name,
       email,
       message,
@@ -15,21 +13,16 @@ const createContactRequest = async (req, res, next) => {
       socialNetwork,
       country,
       city,
-    });
+    } = validData;
+
+    const newRequest = await Request.create(validData);
 
     console.log("Sending email to:", process.env.RECIPIENT_EMAIL);
 
     await sendEmail({
       to: process.env.RECIPIENT_EMAIL,
       subject: 'NEW CUSTOMER FEEDBACK MESSAGE RECEIVED',
-      name,
-      email,
-      mobileNumber,
-      selectedService,
-      socialNetwork,
-      country,
-      city,
-      message,
+      ...validData,
     });
 
     res.status(201).json({
