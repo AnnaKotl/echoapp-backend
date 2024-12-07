@@ -24,7 +24,7 @@ app.use('/submit-request', createSubmitRequest);
 app.use('/contact', contactRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/icons', iconRoutes);
-app.use('/api/services', servicesRouter);
+app.use('/services', servicesRouter);
 app.use(errorHandler);
 
 setupSwagger(app);
