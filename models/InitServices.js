@@ -10,7 +10,7 @@ const initialServices = [
     },
     {
         name: 'Middle',
-        description: ['You provide us with an apple developer account and a meta for the app store', '14 days support'],
+        description: ['14 days support'],
         features: [
             'UI/UX Design',
             'Develop',
@@ -28,9 +28,9 @@ const initialServices = [
             'Develop',
             'QA',
             'Source code',
-            'Apple Developer Account',
-            'Meta for AppStore',
             'Publishing',
+            'Apple developer account',
+            'Meta for AppStore',
         ],
         price: 'from 2500$',
     },
@@ -42,9 +42,9 @@ const initialServices = [
             'Develop',
             'QA',
             'Source code',
-            'Apple Developer Account',
-            'Meta for AppStore',
             'Publishing',
+            'Apple developer account',
+            'Meta for AppStore',
             'Appstore traffic',
         ],
         price: 'from 5000$',
@@ -80,6 +80,8 @@ initializeServices();
 
 
 // Initialize servises ------ PRICES
+
+// node models/InitServices.js
 
 // INIT ONSE ore for TEST ------- ❗️
 
